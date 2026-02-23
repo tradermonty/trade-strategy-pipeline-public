@@ -1,0 +1,55 @@
+name: Bug report
+description: Report a reproducible defect in the framework.
+title: "[Bug] "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a bug. Please share enough detail so we can reproduce quickly.
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What happened and what did you expect?
+      placeholder: A short, concrete bug description.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Exact commands, config, and data needed to reproduce.
+      placeholder: |
+        1. Run ...
+        2. Use strategy ...
+        3. Observe ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Error output
+      description: Paste stack traces, logs, or test output.
+      render: shell
+
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Python version, OS, and relevant package versions.
+      placeholder: "Python 3.12, macOS 14, uv 0.x"
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checklist
+      options:
+        - label: I confirmed this issue with the latest main branch.
+          required: true
+        - label: I included minimal reproduction steps.
+          required: true

@@ -1,0 +1,64 @@
+id: "demo_gap_scored"
+name: "Demo Gap-Up Open Scored"
+description: >
+  Demonstration strategy using scored gap-up open detection.
+  Scores candidates on 5 elements and filters by grade.
+  Uses synthetic data — NOT a live strategy.
+
+universe:
+  type: "us_equities"
+  index: "sp500+nasdaq100"
+  filters:
+    - "avg_volume > 500_000"
+    - "price > 10"
+
+data:
+  timeframe: "daily"
+  lookback_years: 5
+
+signals:
+  entry:
+    type: "gap_open_scored"
+    conditions:
+      - "gap_up_detected"
+      - "score_grade >= C"
+    trend_filter:
+      - "price > sma_200"
+  exit:
+    stop_loss: "10% below entry"
+    trailing_stop: "weekly EMA trailing"
+    take_profit: "risk_reward_3x"
+    stop_loss_pct: 0.10
+    take_profit_rr: 3.0
+
+risk:
+  position_sizing: "fixed_risk"
+  risk_per_trade: 0.01
+  max_positions: 5
+  max_sector_exposure: 0.30
+
+cost_model:
+  commission_per_share: 0.00
+  slippage_bps: 5
+
+validation:
+  method: "walk_forward"
+  n_splits: 5
+  oos_ratio: 0.30
+
+promotion_gates:
+  min_trades: 100
+  max_drawdown: 0.15
+  profit_factor: 1.2
+
+backtest:
+  trailing_mode: "weekly"
+  entry_mode: "same_bar_open"
+  portfolio_mode: true
+
+gap_open_scored:
+  min_gap_pct: 0.04
+  avg_volume_window: 50
+  stop_loss_pct: 0.10
+  min_grade: "C"
+  cooldown: 20

@@ -1,0 +1,64 @@
+id: "demo_vcp"
+name: "Demo VCP Trend Following"
+description: >
+  Demonstration strategy using VCP (Volatility Contraction Pattern) detection
+  with trend-following entry rules. Uses synthetic data — NOT a live strategy.
+
+universe:
+  type: "us_equities"
+  index: "sp500+nasdaq100"
+  filters:
+    - "avg_volume > 500_000"
+    - "price > 10"
+
+data:
+  timeframe: "daily"
+  lookback_years: 5
+
+signals:
+  entry:
+    type: "pivot_breakout"
+    conditions:
+      - "vcp_pattern_detected"
+      - "breakout_above_pivot_point"
+      - "volume > 1.5 * avg_volume_50"
+    trend_filter:
+      - "price > sma_200"
+      - "price > sma_50"
+      - "sma_50 > sma_200"
+  exit:
+    stop_loss: "7% below entry"
+    trailing_stop: "below 21-day EMA or 10-day low"
+    take_profit: "risk_reward_3x"
+    stop_loss_pct: 0.07
+    take_profit_rr: 3.0
+
+risk:
+  position_sizing: "fixed_risk"
+  risk_per_trade: 0.01
+  max_positions: 5
+  max_sector_exposure: 0.30
+
+cost_model:
+  commission_per_share: 0.00
+  slippage_bps: 5
+
+validation:
+  method: "full_sample"
+
+promotion_gates:
+  min_trades: 100
+  max_drawdown: 0.15
+  sharpe: 0.8
+  profit_factor: 1.2
+
+backtest:
+  trailing_mode: "weekly"
+
+vcp_detection:
+  min_contractions: 2
+  contraction_ratio: 0.75
+  lookback_window: 120
+  swing_threshold: 0.05
+  volume_decline: true
+  breakout_volume_ratio: 1.5

@@ -1,0 +1,63 @@
+id: "demo_gap_basic"
+name: "Demo Gap-Up Basic"
+description: >
+  Demonstration strategy using basic gap-up detection with walk-forward validation.
+  Uses synthetic data — NOT a live strategy.
+
+universe:
+  type: "us_equities"
+  index: "sp500+nasdaq100"
+  filters:
+    - "avg_volume > 500_000"
+    - "price > 10"
+
+data:
+  timeframe: "daily"
+  lookback_years: 5
+
+signals:
+  entry:
+    type: "gap_up"
+    conditions:
+      - "gap_up_detected"
+    trend_filter:
+      - "price > sma_200"
+  exit:
+    stop_loss: "7% below entry"
+    trailing_stop: "below 21-day EMA or 10-day low"
+    take_profit: "risk_reward_3x"
+    stop_loss_pct: 0.07
+    take_profit_rr: 3.0
+
+risk:
+  position_sizing: "fixed_risk"
+  risk_per_trade: 0.01
+  max_positions: 5
+  max_sector_exposure: 0.30
+
+cost_model:
+  commission_per_share: 0.00
+  slippage_bps: 5
+
+validation:
+  method: "walk_forward"
+  n_splits: 5
+  oos_ratio: 0.30
+  oos_gates:
+    min_sharpe: 1.0
+    min_profit_factor: 1.2
+    min_pf_ci_lower: 1.0
+    min_sharpe_ci_lower: 0.0
+
+promotion_gates:
+  min_trades: 100
+  max_drawdown: 0.15
+  profit_factor: 1.2
+
+gap_up_detection:
+  min_gap_pct: 0.06
+  volume_ratio: 2.0
+  avg_volume_window: 50
+  max_entry_days: 10
+  breakout_volume_ratio: 1.5
+  max_stop_pct: 0.15
