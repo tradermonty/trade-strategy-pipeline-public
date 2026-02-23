@@ -22,11 +22,12 @@ env/
 .env
 
 # Data (fetched at runtime)
-/data/
+/data/*
 !/data/.gitkeep
 
 # Reports (generated)
-reports/
+/reports/*
+!/reports/.gitkeep
 
 # OS
 .DS_Store

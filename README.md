@@ -142,3 +142,7 @@ Broker API usage is subject to the terms of service of the respective broker.
 ## License
 
 [MIT](LICENSE)
+
+## Changelog
+
+See [CHANGELOG.md](CHANGELOG.md).
