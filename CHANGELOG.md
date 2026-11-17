@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 This project follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 and uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Removed
+
+- Unused `pipeline.data.finviz_client.FinvizClient`. It called the unauthenticated
+  `finviz.com/export.ashx` endpoint and parsed the raw response as CSV, so an HTML
+  sign-in page could be read as data. No pipeline code used it, and the default
+  pipeline never needed a Finviz key (#1).
+
 ## [0.1.0] - 2026-02-23
 
 ### Added

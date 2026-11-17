@@ -79,6 +79,5 @@ module = [
     "duckdb.*",
     "alpaca.*",
     "pandas_market_calendars.*",
-    "finvizfinance.*",
 ]
 ignore_missing_imports = true

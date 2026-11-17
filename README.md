@@ -75,7 +75,7 @@ src/pipeline/
   execution/    — Paper/live execution service + broker adapters
   runner/       — Pipeline orchestrator + CLI
   reporting/    — Markdown + chart generation
-  data/         — Parquet I/O, API clients (Alpaca, FMP, Finviz)
+  data/         — Parquet I/O, API clients (Alpaca, FMP)
 
 strategies/
   examples/     — Demo strategies (synthetic data only)
