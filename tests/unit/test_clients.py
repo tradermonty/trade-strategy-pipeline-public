@@ -7,7 +7,6 @@ import pandas as pd
 import pytest
 
 from pipeline.data.alpaca_client import AlpacaClient
-from pipeline.data.finviz_client import FinvizClient
 from pipeline.data.fmp_client import FmpClient
 
 
@@ -57,29 +56,6 @@ class TestAlpacaClient:
         client = AlpacaClient(api_key=api_key, secret_key=secret_key)
         result = client.fetch_daily_bars("AAPL", "2023-01-02", "2023-01-06")
         assert len(result) > 0
-
-
-class TestFinvizClient:
-    def test_raises_in_offline_mode(self, monkeypatch: pytest.MonkeyPatch) -> None:
-        monkeypatch.setenv("CI_OFFLINE", "1")
-        client = FinvizClient()
-        with pytest.raises(RuntimeError, match="offline CI mode"):
-            client.screen(filters={"Market Cap.": "Mega ($200bln and more)"})
-
-    def test_screen_mocked(self, monkeypatch: pytest.MonkeyPatch) -> None:
-        monkeypatch.delenv("CI_OFFLINE", raising=False)
-        client = FinvizClient()
-
-        mock_result = pd.DataFrame(
-            {
-                "Ticker": ["AAPL", "MSFT"],
-                "Company": ["Apple", "Microsoft"],
-                "Sector": ["Technology", "Technology"],
-            }
-        )
-        with patch.object(client, "_screen_from_api", return_value=mock_result):
-            result = client.screen(filters={"Market Cap.": "Mega ($200bln and more)"})
-            assert len(result) == 2
 
 
 class TestFmpClient:

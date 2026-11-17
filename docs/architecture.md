@@ -93,7 +93,7 @@ Paper/live execution service:
 ### `src/pipeline/data/`
 
 - **`storage.py`** — Parquet I/O, schema validation, forward-fill, DuckDB query helper
-- **`alpaca_client.py`**, **`fmp_client.py`**, **`finviz_client.py`** — API clients with `CI_OFFLINE` guard
+- **`alpaca_client.py`**, **`fmp_client.py`** — API clients with `CI_OFFLINE` guard
 
 ## Execution Model (Day T / Day T+1)
 
